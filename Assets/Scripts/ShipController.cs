@@ -20,20 +20,15 @@ public class ShipController : MonoBehaviour
     [SerializeField]
     private float shootCooldown = 1f;
     private float shootTimer = 0f;
-    private Rigidbody2D rb2D;
 
-    [Header("Звуки")]
-    [SerializeField]
-    private AudioSource fireSound;
-    [SerializeField]
-    private AudioSource destroyShipSound;
+    private GameController gameController;
 
 
     
 
     void Start()
     {
-        rb2D = GetComponent<Rigidbody2D>();
+        gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -49,7 +44,7 @@ public class ShipController : MonoBehaviour
         if ((Input.GetKey(KeyCode.UpArrow)) ||
             (Input.GetKey(KeyCode.W)))
         {
-            rb2D.AddRelativeForce(Vector2.up * movementSpeed * Time.deltaTime);
+            GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * movementSpeed * Time.deltaTime);
             //мерцание огня
             if (flameTimer <= 0)
             {
@@ -87,8 +82,8 @@ public class ShipController : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.Space))
         {
-            Instantiate(bullet, transform.TransformPoint(new Vector3(0,2.5f,0)), transform.rotation);
-            fireSound.Play();
+            Instantiate(bullet, transform.TransformPoint(new Vector3(0,2.5f,0)), transform.rotation, GameObject.FindWithTag("Bullet_Parent").transform);
+            GetComponent<AudioSource>().Play();
             shootTimer = shootCooldown;
         }
     }
@@ -103,10 +98,15 @@ public class ShipController : MonoBehaviour
     {
         if (collision.gameObject.tag != "Bullet")
         {
-            destroyShipSound.Play();
-            transform.position = Vector3.zero;
-            rb2D.velocity = Vector2.zero;
-            transform.rotation = Quaternion.identity;
+            if (gameController.DecreaseLife())
+            {
+                transform.position = Vector3.zero;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                transform.rotation = Quaternion.identity;
+            }
+            else
+                Destroy(gameObject);
+            
         }
     }
 }
