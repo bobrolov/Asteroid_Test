@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class BorderController : MonoBehaviour
 {
-    [SerializeField]
-    private float xBorder = 44f;
-    [SerializeField]
-    private float yBorder = 24f;
+    private float xBorder;
+    private float yBorder;
 
-    // Update is called once per frame
+    private GameController gameController;
+
+    private void Start()
+    {
+        gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+        xBorder = gameController.xBorder;
+        yBorder = gameController.yBorder;
+    }
     void Update()
     {
         if (transform.position.x > xBorder)

@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 1029762392941916449}
   - component: {fileID: 1029762392941916450}
   - component: {fileID: 8545450254419668205}
+  - component: {fileID: 5360315637088401467}
+  - component: {fileID: -7411011920867573691}
+  - component: {fileID: 4131943376534085732}
   m_Layer: 0
   m_Name: Alien
   m_TagString: Untagged
@@ -92,7 +95,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -117,9 +120,61 @@ PolygonCollider2D:
       - {x: 0.8711357, y: 0.4418707}
       - {x: 0.6233616, y: 0.8577347}
       - {x: -0.7675972, y: 0.84179974}
-      - {x: -1.0138054, y: 0.43107605}
+      - {x: -1.0066032, y: 0.44055557}
       - {x: -1.2992687, y: 0.43179798}
       - {x: -1.7545637, y: -0.13328075}
       - {x: -2.13343, y: -0.13857365}
       - {x: -2.1349678, y: -0.22960538}
       - {x: -1.7501901, y: -0.23238057}
+--- !u!114 &5360315637088401467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029762392941916451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b53e2cc61cc35d42a95a342bc62ff6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 400
+  alienBullet: {fileID: 2590599702347199071, guid: c8c97a609f338d54daba7bc261e082e4,
+    type: 3}
+  shootCooldown: 3
+  shootRadius: 1.5
+  changeDirectionTime: 3
+  temp: {x: 0, y: 0, z: 0}
+--- !u!50 &-7411011920867573691
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029762392941916451}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &4131943376534085732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029762392941916451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68fcfdc0f72fe7d44bbee63806653030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

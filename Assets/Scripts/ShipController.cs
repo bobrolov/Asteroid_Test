@@ -98,6 +98,8 @@ public class ShipController : MonoBehaviour
     {
         if (collision.gameObject.tag != "Bullet")
         {
+            if (collision.gameObject.tag == "AlienBullet")
+                Destroy(collision.gameObject);
             if (gameController.DecreaseLife())
             {
                 transform.position = Vector3.zero;

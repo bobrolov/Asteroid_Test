@@ -9,8 +9,6 @@ public class AsteroidController : MonoBehaviour
     private float minSpeed = 30f;
     [SerializeField]
     private float maxSpeed = 150f;
-    [SerializeField]
-    private float rotateSpeed = 25f;
 
     private GameController gameController;
 
@@ -19,7 +17,6 @@ public class AsteroidController : MonoBehaviour
     {
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         GetComponent<Rigidbody2D>().AddForce(transform.up * Random.Range(minSpeed, maxSpeed));
-        GetComponent<Rigidbody2D>().angularVelocity = Random.Range(-rotateSpeed, rotateSpeed);
     }
 
     public void CollisionDetect (Collider2D collision)
