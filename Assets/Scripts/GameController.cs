@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    [Header("Префабы")]
     [SerializeField]
     private GameObject ship;
     [SerializeField]
@@ -15,6 +16,10 @@ public class GameController : MonoBehaviour
     private GameObject asteroidSmall;
     [SerializeField]
     private GameObject alienShip;
+    [SerializeField]
+    private GameObject alienSmallShip;
+
+    [Header("Игровые поля")]
     [SerializeField]
     private GameObject scoreText;
     [SerializeField]
@@ -34,15 +39,28 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int asteroidSmallScore = 100;
     [SerializeField]
-    private int alienScore = 500;
+    private int alienScore = 200;
+    [SerializeField]
+    private int alienSmallScore = 1000;
+    [SerializeField]
+    private int hardScore = 10000;
 
     [SerializeField]
     private int asteroidIncrease = 2;
     [SerializeField]
     private int asteroidStartWave = 4;
+
+
     [SerializeField]
-    private float alienSpawnTime = 10f;
-    private float alienSpawnTimer = 20f;
+    private float startAlienSpawnTime = 10f;
+    [SerializeField]
+    private float hardAlienSpawnTime = 4f;
+    private float alienSpawnTimer;
+    [SerializeField]
+    private float startChanceToSpawnSmallAlien = 0.2f;
+    [SerializeField]
+    private float hardChanceToSpawnSmallAlien = 0.8f;
+
 
     [SerializeField]
     public float xBorder = 44f;
@@ -52,7 +70,7 @@ public class GameController : MonoBehaviour
     private float borderSpawn = 2f;
 
     [SerializeField]
-    private AudioSource asteroidDestroySound;
+    private GameObject asteroidDestroySound;
     [SerializeField]
     private AudioSource shipDestroySound;
     [SerializeField]
@@ -78,44 +96,80 @@ public class GameController : MonoBehaviour
         SpawnAlien();
     }
 
-    public void AsteroidDestroy (string asteroidTag, Transform transform)
+    public void StartGame()
     {
-        Debug.Log("Destroy");
+        Time.timeScale = 1f;
+        DestroyAsteroids();
+        score = 0;
+        scoreAddLives = 10000;
+        lives = 3;
+        wave = 0;
+        isAlienCreate = false;
+        alienSpawnTimer = startAlienSpawnTime * Random.Range(1.2f,1.6f);
+
+
+        scoreText.GetComponent<Text>().text = "00";
+        scoreText.SetActive(true);
+        liveField.transform.GetChild(0).gameObject.SetActive(true);
+        liveField.transform.GetChild(1).gameObject.SetActive(true);
+        liveField.transform.GetChild(2).gameObject.SetActive(true);
+        liveField.SetActive(true);
+
+        GameObject.FindWithTag("BGMusic").GetComponent<BGMusicScript>().CanPlay(true);
+        GameObject.FindWithTag("BGMusic").GetComponent<BGMusicScript>().PauseReset();
+
+        Invoke("SpawnShip", 0.5f);
+        SpawnAsteroids();
+    }
+
+    public void AsteroidDestroy (string asteroidTag, Vector3 position, bool increaseScore)
+    {
         string newSize = "";
         if (asteroidTag == "AsteroidLarge")
         {
-            score += asteroidLargeScore;
+            if (increaseScore)
+                score += asteroidLargeScore;
             newSize = "medium";
             objectCounter++;
+            PlayAsteroidDestroySound("large");
         }
         else if (asteroidTag == "AsteroidMedium")
         {
-            score += asteroidMediumScore;
+            if (increaseScore)
+                score += asteroidMediumScore;
             newSize = "small";
             objectCounter++;
+            PlayAsteroidDestroySound("medium");
         }
         else if (asteroidTag == "AsteroidSmall")
         {
-            score += asteroidSmallScore;
+            if (increaseScore)
+                score += asteroidSmallScore;
             objectCounter--;
+            PlayAsteroidDestroySound("small");
         }
         if ((newSize == "medium") || (newSize == "small"))
         {
-            AsteroidCreate(newSize, transform.position, Quaternion.Euler(0, 0, Random.Range(30f, 70f)));
-            AsteroidCreate(newSize, transform.position, Quaternion.Euler(0, 0, Random.Range(-70f, -30f)));
+            AsteroidCreate(newSize, position, Quaternion.Euler(0, 0, Random.Range(30f, 70f)));
+            AsteroidCreate(newSize, position, Quaternion.Euler(0, 0, Random.Range(-70f, -30f)));
         }
         scoreText.GetComponent<Text>().text = score.ToString();
         CheckAddLive();
-        asteroidDestroySound.Play();
         CheckObjectCounter();
     }
 
-    public void AlienDestroy()
+    public void AlienDestroy(string tagAlien, bool increaseScore)
     {
-        score += alienScore;
-        scoreText.GetComponent<Text>().text = score.ToString();
-        CheckAddLive();
-        asteroidDestroySound.Play();
+        if (increaseScore)
+        {
+            if (tagAlien == "Alien")
+                score += alienScore;
+            else
+                score += alienSmallScore;
+            scoreText.GetComponent<Text>().text = score.ToString();
+            CheckAddLive();
+        }
+        PlayAsteroidDestroySound("medium");
         isAlienCreate = false;
         objectCounter--;
         CheckObjectCounter();
@@ -143,35 +197,34 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                Instantiate(alienShip, GetRandomSpawnPosition(), Quaternion.identity, GameObject.FindWithTag("Asteroid_Parent").transform);
+                if (score < hardScore)
+                {
+                    if (Random.Range(0f,1f) < startChanceToSpawnSmallAlien)
+                        Instantiate(alienSmallShip, GetRandomSpawnPosition(), Quaternion.identity, GameObject.FindWithTag("Aliens").transform);
+                    else
+                        Instantiate(alienShip, GetRandomSpawnPosition(), Quaternion.identity, GameObject.FindWithTag("Aliens").transform);
+                    float coeficient = score / hardScore;
+                    alienSpawnTimer = (startAlienSpawnTime * (1 - coeficient) + hardAlienSpawnTime * coeficient) * Random.Range(0.3f, 1.5f);
+                }
+                else
+                {
+                    if (Random.Range(0f, 1f) < hardChanceToSpawnSmallAlien)
+                        Instantiate(alienSmallShip, GetRandomSpawnPosition(), Quaternion.identity, GameObject.FindWithTag("Aliens").transform);
+                    else
+                        Instantiate(alienShip, GetRandomSpawnPosition(), Quaternion.identity, GameObject.FindWithTag("Aliens").transform);
+
+                    alienSpawnTimer = hardAlienSpawnTime * Random.Range(0.8f, 1.5f);
+                }
+
                 isAlienCreate = true;
-                alienSpawnTimer = alienSpawnTime * Random.Range(1f, 1.5f);
                 objectCounter++;
             }
         }
         
     }
 
-    public void StartGame()
-    {
-        Time.timeScale = 1f;
-        DestroyAsteroids();
-        score = 0;
-        scoreAddLives = 10000;
-        lives = 3;
-        wave = 0;
-        isAlienCreate = false;
-        
-        scoreText.GetComponent<Text>().text = "00";
-        scoreText.SetActive(true);
-        liveField.transform.GetChild(0).gameObject.SetActive(true);
-        liveField.transform.GetChild(1).gameObject.SetActive(true);
-        liveField.transform.GetChild(2).gameObject.SetActive(true);
-        liveField.SetActive(true);
 
-        Instantiate(ship);
-        SpawnAsteroids();
-    }
+
     void DestroyAsteroids()
     {
         foreach (GameObject asteroid in GameObject.FindGameObjectsWithTag("AsteroidLarge"))
@@ -180,22 +233,24 @@ public class GameController : MonoBehaviour
             GameObject.Destroy(asteroid);
         foreach (GameObject asteroid in GameObject.FindGameObjectsWithTag("AsteroidSmall"))
             GameObject.Destroy(asteroid);
+        foreach (GameObject alien in GameObject.FindGameObjectsWithTag("Alien"))
+            GameObject.Destroy(alien);
     }
-    public bool DecreaseLife()
+
+    public void DecreaseLife()
     {
-        shipDestroySound.Play();
+        
         if (lives > 1)
         {
+            shipDestroySound.Play();
             liveField.transform.GetChild(3 - lives).gameObject.SetActive(false);
             lives--;
-            return true;
+            Invoke("SpawnShip", 1);
         }
         else
-        {
             GameOver();
-            return false;
-        }
     }
+
     void IncreaseLife()
     {
         if (lives <3)
@@ -220,18 +275,20 @@ public class GameController : MonoBehaviour
         gameOverScreen.SetActive(true);
         gameOverScreen.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SCORE: " + score.ToString();
         gameOverSound.Play();
-
+        GameObject.FindWithTag("BGMusic").GetComponent<BGMusicScript>().CanPlay(false);
     }
 
     void GamePause()
     {
         Time.timeScale = 0f;
         pauseScreen.SetActive(true);
+        GameObject.FindWithTag("BGMusic").GetComponent<BGMusicScript>().CanPlay(false);
     }
 
     public void GameUnPause()
     {
         Time.timeScale = 1f;
+        GameObject.FindWithTag("BGMusic").GetComponent<BGMusicScript>().CanPlay(true);
     }
     public void Quit()
     {
@@ -252,7 +309,8 @@ public class GameController : MonoBehaviour
         if (objectCounter == 0)
         {
             wave++;
-            SpawnAsteroids();
+            Invoke("SpawnAsteroids", 1);
+            GameObject.FindWithTag("BGMusic").GetComponent<BGMusicScript>().PauseReset();
         }
     }
     Vector3 GetRandomSpawnPosition()
@@ -281,5 +339,29 @@ public class GameController : MonoBehaviour
             yPos = Random.Range(-yBorder + borderSpawn, yBorder - borderSpawn);
         }
         return new Vector3(xPos, yPos, 0);
+    }
+
+    void SpawnShip()
+    {
+        Instantiate(ship);
+    }
+
+    void PlayAsteroidDestroySound (string size)
+    {
+        if (size == "large")
+            asteroidDestroySound.transform.Find("Large").GetComponent<AudioSource>().Play();
+        else if (size == "medium")
+            asteroidDestroySound.transform.Find("Medium").GetComponent<AudioSource>().Play();
+        else if (size == "small")
+            asteroidDestroySound.transform.Find("Small").GetComponent<AudioSource>().Play();
+
+    }
+
+    public void AlienEscape ()
+    {
+
+        isAlienCreate = false;
+        objectCounter--;
+        CheckObjectCounter();
     }
 }

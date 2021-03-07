@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class ParticleController : MonoBehaviour
 {
-    [SerializeField]
-    private float duration = 0.5f;
-    // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, duration);
+        Destroy(gameObject, 1f);
     }
-
-    // Update is called once per frame
-
 }

@@ -6,6 +6,7 @@ public class BorderController : MonoBehaviour
 {
     private float xBorder;
     private float yBorder;
+    private bool isBorderCross = false;
 
     private GameController gameController;
 
@@ -17,14 +18,30 @@ public class BorderController : MonoBehaviour
     }
     void Update()
     {
+        isBorderCross = false;
         if (transform.position.x > xBorder)
+        {
             transform.position = new Vector3(-xBorder, transform.position.y, 0);
+            isBorderCross = true;
+        }
         else if (transform.position.x < -xBorder)
+        {
             transform.position = new Vector3(xBorder, transform.position.y, 0);
+            isBorderCross = true;
+        }
 
         if (transform.position.y > yBorder)
-            transform.position = new Vector3(transform.position.x, -yBorder , 0);
+        {
+            transform.position = new Vector3(transform.position.x, -yBorder, 0);
+            isBorderCross = true;
+        }
         else if (transform.position.y < -yBorder)
+        {
             transform.position = new Vector3(transform.position.x, yBorder, 0);
+            isBorderCross = true;
+        }
+        if ((tag == "Alien" || tag == "AlienSmall") && isBorderCross)
+            GetComponent<AlienController>().AlienCanEscape();
+
     }
 }

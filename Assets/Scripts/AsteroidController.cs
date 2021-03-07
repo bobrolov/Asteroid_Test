@@ -10,6 +10,9 @@ public class AsteroidController : MonoBehaviour
     [SerializeField]
     private float maxSpeed = 150f;
 
+    [SerializeField]
+    private GameObject particlesDestroy;
+
     private GameController gameController;
 
 
@@ -21,12 +24,14 @@ public class AsteroidController : MonoBehaviour
 
     public void CollisionDetect (Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Bullet"))
+        string collisionTag = collision.gameObject.tag;
+        if ((collisionTag == "Bullet") || (collisionTag == "Player") || (collisionTag == "AlienBullet") || (collisionTag == "Alien") || (collisionTag == "AlienSmall"))
         {
-            Destroy(collision.gameObject);
-            gameController.AsteroidDestroy(tag, this.transform);
+            if ((collisionTag == "Bullet") || (collisionTag == "AlienBullet"))
+                Destroy(collision.gameObject);
+            Instantiate(particlesDestroy, transform.TransformPoint(Vector3.zero), Quaternion.identity, GameObject.FindWithTag("ParticlesParent").transform);
+            gameController.AsteroidDestroy(tag, this.transform.position, ((collisionTag == "Bullet") || (collisionTag == "Player")));
             Destroy(gameObject);
-
         }
     }
 
