@@ -9,13 +9,12 @@ public class StartScript : MonoBehaviour
     [SerializeField]
     private float blinkTime = 0.6f;
     private float blinkTimer = 0;
-    // Start is called before the first frame update
+
     void Start()
     {
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (blinkTimer >= blinkTime)

@@ -19,6 +19,9 @@ TagManager:
   - BulletsAlien
   - AlienSmall
   - Aliens
+  - Asteroids
+  - Particles
+  - PlayerSpawnZone
   layers:
   - Default
   - TransparentFX

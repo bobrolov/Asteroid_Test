@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1269164005512536358}
   - component: {fileID: 1269164005512536357}
-  - component: {fileID: 7584346801560763626}
-  - component: {fileID: 6175877835022051388}
   - component: {fileID: 499971494417420354}
-  - component: {fileID: 2774523152439783523}
+  - component: {fileID: 7584346801560763626}
   - component: {fileID: 3204976374028163800}
+  - component: {fileID: 2774523152439783523}
+  - component: {fileID: 6175877835022051388}
   m_Layer: 0
   m_Name: AlienSmall
   m_TagString: AlienSmall
@@ -86,6 +86,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &499971494417420354
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269164005512536356}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!60 &7584346801560763626
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -121,61 +142,6 @@ PolygonCollider2D:
       - {x: 0.4584379, y: 0.24748936}
       - {x: 0.3273335, y: 0.4418707}
       - {x: -0.39738154, y: 0.44765452}
---- !u!114 &6175877835022051388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269164005512536356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b53e2cc61cc35d42a95a342bc62ff6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 500
-  alienBullet: {fileID: 2590599702347199071, guid: c8c97a609f338d54daba7bc261e082e4,
-    type: 3}
-  shootCooldown: 0.8
-  shootRadius: 1
-  changeDirectionTime: 2
-  particlesDestroy: {fileID: 62028482723437977, guid: aaf0ee2c3603db24084404b15449cbaf,
-    type: 3}
-  chanceToShootPlayer: 0.75
-  chanceAlienToEscape: 0.05
---- !u!50 &499971494417420354
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269164005512536356}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &2774523152439783523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269164005512536356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68fcfdc0f72fe7d44bbee63806653030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &3204976374028163800
 AudioSource:
   m_ObjectHideFlags: 0
@@ -272,3 +238,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2774523152439783523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269164005512536356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68fcfdc0f72fe7d44bbee63806653030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6175877835022051388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269164005512536356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b53e2cc61cc35d42a95a342bc62ff6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlesDestroy: {fileID: 62028482723437977, guid: aaf0ee2c3603db24084404b15449cbaf,
+    type: 3}
+  speed: 500
+  changeDirectionTime: 2
+  alienBullet: {fileID: 2590599702347199071, guid: c8c97a609f338d54daba7bc261e082e4,
+    type: 3}
+  shootCooldown: 0.8
+  shootRadius: 1
+  chanceToShootPlayer: 0.75
+  chanceAlienToEscape: 0.03

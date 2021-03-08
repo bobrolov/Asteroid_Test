@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BGMusicScript : MonoBehaviour
 {
+    [Header("Параметры звука")]
     [SerializeField]
     private float pauseBetweenBeatMax = 1f;
     [SerializeField]
@@ -20,7 +21,13 @@ public class BGMusicScript : MonoBehaviour
     {
         PauseReset();
     }
+
     void Update()
+    {
+        PlayBGM();
+    }
+
+    void PlayBGM()
     {
         if (isCanPlay)
         {
@@ -52,4 +59,5 @@ public class BGMusicScript : MonoBehaviour
     {
         isCanPlay = play;
     }
+
 }

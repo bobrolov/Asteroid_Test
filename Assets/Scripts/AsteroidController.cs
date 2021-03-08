@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class AsteroidController : MonoBehaviour
 {
+    [Header("Префабы")]
+    [SerializeField]
+    private GameObject particlesDestroy;
+
     [Header("Параметры перемещения")]
     [SerializeField]
     private float minSpeed = 30f;
     [SerializeField]
     private float maxSpeed = 150f;
 
-    [SerializeField]
-    private GameObject particlesDestroy;
-
+    //Игровой контроллер
     private GameController gameController;
-
 
     void Start()
     {
@@ -29,10 +30,9 @@ public class AsteroidController : MonoBehaviour
         {
             if ((collisionTag == "Bullet") || (collisionTag == "AlienBullet"))
                 Destroy(collision.gameObject);
-            Instantiate(particlesDestroy, transform.TransformPoint(Vector3.zero), Quaternion.identity, GameObject.FindWithTag("ParticlesParent").transform);
+            Instantiate(particlesDestroy, transform.TransformPoint(Vector3.zero), Quaternion.identity, GameObject.FindWithTag("Particles").transform);
             gameController.AsteroidDestroy(tag, this.transform.position, ((collisionTag == "Bullet") || (collisionTag == "Player")));
             Destroy(gameObject);
         }
     }
-
 }

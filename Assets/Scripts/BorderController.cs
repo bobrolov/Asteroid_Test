@@ -42,6 +42,5 @@ public class BorderController : MonoBehaviour
         }
         if ((tag == "Alien" || tag == "AlienSmall") && isBorderCross)
             GetComponent<AlienController>().AlienCanEscape();
-
     }
 }

@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 5167859065696587376}
   - component: {fileID: 789334445976400324}
   m_Layer: 0
-  m_Name: Asteroid_Medium
+  m_Name: AsteroidMedium
   m_TagString: AsteroidMedium
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -421,7 +421,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8314887223340507626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.07, y: 8.01, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8271724678585991543}
@@ -463,10 +463,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e9ed83c554c8f4ab0ed74b24ed9ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 220
-  maxSpeed: 450
   particlesDestroy: {fileID: 3786077402868967118, guid: 70395427e48771640804faf3d64d31e5,
     type: 3}
+  minSpeed: 220
+  maxSpeed: 450
 --- !u!114 &789334445976400324
 MonoBehaviour:
   m_ObjectHideFlags: 0

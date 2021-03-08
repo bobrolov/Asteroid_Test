@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7889927150520694191}
   - component: {fileID: 7526516802044045692}
   m_Layer: 0
-  m_Name: Asteroid_Small
+  m_Name: AsteroidSmall
   m_TagString: AsteroidSmall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 237822825222706500}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.07, y: 8.01, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3460363880388817448}
@@ -69,10 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e9ed83c554c8f4ab0ed74b24ed9ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 320
-  maxSpeed: 500
   particlesDestroy: {fileID: 6882793805110445498, guid: 56aff81a45173204eb6ed2300d2dbc9f,
     type: 3}
+  minSpeed: 320
+  maxSpeed: 500
 --- !u!114 &7526516802044045692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,7 +375,7 @@ Transform:
   m_GameObject: {fileID: 7280430613289175954}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.1, y: 2.1, z: 1}
+  m_LocalScale: {x: 2.3, y: 2.3, z: 1}
   m_Children: []
   m_Father: {fileID: 669416785892822293}
   m_RootOrder: 0
